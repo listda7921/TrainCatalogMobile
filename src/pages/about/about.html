@@ -1,11 +1,37 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title (click)="scrollToTop()">
       About
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngFor="let photo of photos">
+    <ion-item>{{photo.db.id}}</ion-item>
+    <img [src]="photo.base64" />
+    <ion-card-content>
+      <p>{{photo.db.url}}</p>
+      <p>Created on: {{photo.db.date_uploaded | date:'medium'}}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p>Db Results</p>
+        <ol>
+          <li *ngFor="let dbRes of dbResults">{{dbRes.url}}</li>
+        </ol>
+      </ion-col>
+      <ion-col>
+        <p>Folder Results</p>
+        <ol>
+          <li *ngFor="let folderRes of folderResults">{{folderRes}}</li>
+        </ol>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
